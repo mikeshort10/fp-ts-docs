@@ -544,6 +544,8 @@ A single interface `BoundedSemilattice` which extends `BoundedJoinSemilattice` a
 
 A single interface `BoundedDistributiveSemilattice` which extends `BoundedSemilattice` and `DistributiveSemilattice`.
 
+A function `getMinMaxBoundedDistributiveLattice` which given an `Ord<A>` returns a `BoundedDistributiveLattice<A>`.
+
 ### `HeytingAlgebra.ts`
 
 No, it's not the emotion you're feeling after reading through all these definitions.
