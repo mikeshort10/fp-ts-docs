@@ -64,6 +64,8 @@ For example, if we have a function `addTwo` and a function `multiplyByFour`, we 
 | Distributive | a \* ( b + c ) = ( a \* b ) + ( a \* c )                                            |
 | Annihilation | a \* 0 = 0                                                                          |
 | Inverse      | In the set, there exists some element `x` for `y` that results in `y = y \* x \* y` |
+| Idempotency  | x ^ x = 0                                                                           |
+| Absorbtion   | meet: `x ^ (x v y) = x` join: `x V (x ^ y) = x`                                     |
 
 ## Who am I? Where do I fit in?
 
@@ -403,21 +405,144 @@ If you have decided to continue reading or have come back to this section (welco
 
 > a set together with a binary relation indicating that, for certain pairs of elements in the set, one of the elements precedes the other in the ordering.
 
-### `JoinSemilattice.ts`
+### [JoinSemilattice.ts](https://gcanti.github.io/fp-ts/modules/JoinSemilattice.ts.html)
 
-### `MeetSemilattice.ts`
+|              |                                                                               |
+| ------------ | ----------------------------------------------------------------------------- |
+| Definition   | A magma whose binary operation ^ (join) defines the least upper bound.        |
+|              | Join is associative, commutative, and [idempotent](#mathematical-properties). |
+| Extends      | Magma                                                                         |
+| What it Adds | join                                                                          |
 
-### `Lattice.ts`
+##### Examples
 
-### `DistributiveLattice.ts`
+##### Counterexamples
 
-### `BoundedJoinSemilattice.ts`
+##### What this module contains
 
-### `BoundedMeetSemilattice.ts`
+A single interface `JoinSemilattice` which defines the type for the `join` method.
 
-### `BoundedLattice.ts`
+### [MeetSemilattice.ts](https://gcanti.github.io/fp-ts/modules/MeetSemilattice.ts.html)
 
-### `BoundedDistributiveLattice.ts`
+|              |                                                                               |
+| ------------ | ----------------------------------------------------------------------------- |
+| Definition   | A magma whose binary operation ∨ (meet) defines the greatest lower bound.     |
+|              | Meet is associative, commutative, and [idempotent](#mathematical-properties). |
+| Extends      | Magma                                                                         |
+| What it Adds | meet                                                                          |
+
+##### Examples
+
+##### Counterexamples
+
+##### What this module contains
+
+A single interface `MeetSemilattice` which defines the type for the `meet` method.
+
+### [Lattice.ts](https://gcanti.github.io/fp-ts/modules/Lattice.ts.html)
+
+|              |                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Definition   | A combination of the laws of meet- and join-semilattices, i.e. it has both a greatest lower bound and least upper bound. |
+|              | It must also follow the [absorbtion](#mathematical-properties) laws for meet and join.                                   |
+| Extends      | MeetSemilattice, JoinSemilattice                                                                                         |
+| What it Adds | N/A                                                                                                                      |
+
+##### Examples
+
+##### Counterexamples
+
+##### What this module contains
+
+A single interface `Lattice` which extends `JoinSemilattice` and `MeetSemilattice`.
+
+### [DistributiveLattice.ts](https://gcanti.github.io/fp-ts/modules/DistributiveLattice.ts.html)
+
+|              |                                                                                |
+| ------------ | ------------------------------------------------------------------------------ |
+| Definition   | A lattice which must also exhibit the distributive property for join and meet. |
+| Extends      | Lattice                                                                        |
+| What it Adds | N/A                                                                            |
+
+##### Examples
+
+##### Counterexamples
+
+##### What this module contains
+
+A single interface `DistributiveLattice` which extends `Lattice`.
+
+A function `getMinMaxDistributiveLattice` which given an `Ord<A>` returns a `DistributiveLattice<A>`.
+
+### [BoundedJoinSemilattice.ts](https://gcanti.github.io/fp-ts/modules/BoundedJoinSemilattice.ts.html)
+
+|              |                                                                                 |
+| ------------ | ------------------------------------------------------------------------------- |
+| Definition   | A join-semilattice which must also exhibit the following for join: `a ∨ 0 == a` |
+|              | That is, 0 is the greatest lower bound of the set.                              |
+| Extends      | JoinSemilattice                                                                 |
+| What it Adds | zero                                                                            |
+
+##### Examples
+
+##### Counterexamples
+
+##### What this module contains
+
+A single interface `BoundedJoinSemilattice` which extends `JoinSemilattice` and defines a property `zero`, equaling the greatest lower bound.
+
+### [BoundedMeetSemilattice.ts](https://gcanti.github.io/fp-ts/modules/BoundedMeetSemilattice.ts.html)
+
+|              |                                                                                 |
+| ------------ | ------------------------------------------------------------------------------- |
+| Definition   | A meet-semilattice which must also exhibit the following for meet: `a ^ 1 == a` |
+|              | That is, 1 is the least upper bound of the set.                                 |
+| Extends      | MeetSemilattice                                                                 |
+| What it Adds | one                                                                             |
+
+##### Examples
+
+##### Counterexamples
+
+##### What this module contains
+
+A single interface `BoundedMeetSemilattice` which extends `MeetSemilattice` and defines a property `one`, equaling the least upper bound.
+
+### [BoundedLattice.ts](https://gcanti.github.io/fp-ts/modules/BoundedLattice.ts.html)
+
+|              |                                                                                                                                                 |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Definition   | A combination of the laws of bounded-meet- and bounded-join-semilattices, i.e. its greatest upper bound is 1 and its greatest lower bound is 0. |
+|              | It must also follow the [absorbtion](#mathematical-properties) laws for meet and join.                                                          |
+| Extends      | BoundedJoinSemilattice, BoundedMeetSemilattice                                                                                                  |
+| What it Adds | one                                                                                                                                             |
+
+##### Examples
+
+##### Counterexamples
+
+##### What this module contains
+
+A single interface `BoundedSemilattice` which extends `BoundedJoinSemilattice` and `BoundedMeetSemilattice`.
+
+### [BoundedDistributiveLattice.ts](https://gcanti.github.io/fp-ts/modules/BoundedDistributiveLattice.ts.html)
+
+|              |                                                                                        |
+| ------------ | -------------------------------------------------------------------------------------- |
+| Definition   | A combination of the laws of bounded- and distributive-semilattices. That is,          |
+|              | Its greatest upper bound is 1 and its greatest lower bound is 0.                       |
+|              | It must also follow the [absorbtion](#mathematical-properties) laws for meet and join. |
+|              | A lattice which must exhibit the distributive property for join and meet.              |
+| Extends      | BoundedJoinSemilattice, BoundedMeetSemilattice                                         |
+| What it Adds | one                                                                                    |
+
+##### Examples
+
+##### Counterexamples
+
+##### What this module contains
+
+A single interface `BoundedDistributiveSemilattice` which extends `BoundedSemilattice` and `DistributiveSemilattice`.
 
 ### `HeytingAlgebra.ts`
 
