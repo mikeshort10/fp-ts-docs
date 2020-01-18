@@ -550,6 +550,10 @@ A function `getMinMaxBoundedDistributiveLattice` which given an `Ord<A>` returns
 
 No, it's not the emotion you're feeling after reading through all these definitions.
 
+|||
+|---|---|
+|Definition|A bounded-distributive-semilattice that includes both a `not` and an `implies`|
+ method. `implies` defines a function that returns 1 if left value is less than or equal to the right. Otherwise it returns the right. The not function can be defined as `a` implies 0.
 ### `BooleanAlgebra.ts`
 
 ---
