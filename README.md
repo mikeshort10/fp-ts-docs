@@ -1,6 +1,6 @@
 ## About this document
 
-This document is not an attempt at explaining category theory in full. Its primary purpose is to explain the interfaces, functions, etc. that exist in the [`fp-ts` library](https://gcanti.github.io/fp-ts/), many of which depict abstract concepts of category theory and function programming.
+This document is not an attempt at explaining category theory in full. Its primary purpose is to explain the interfaces, functions, etc. that exist in the [fp-ts` library](https://gcanti.github.io/fp-ts/), many of which depict abstract concepts of category theory and function programming.
 
 The goal of this article is to weed through that, so that you can better understand how to use the library in practice.
 
@@ -69,7 +69,7 @@ For example, if we have a function `addTwo` and a function `multiplyByFour`, we 
 
 ## Who am I? Where do I fit in?
 
-### [`Identity.ts`](https://gcanti.github.io/fp-ts/modules/Identity.ts.html)
+### [Identity.ts](https://gcanti.github.io/fp-ts/modules/Identity.ts.html)
 
 One of the foundations of mathematics (and indeed all reality!) is that everything is equal to itself.
 
@@ -81,7 +81,7 @@ This module simply creates a `type alias` to represent this:
 
 This module also contains a number of functions (`map`, `chain`, `ap`, etc.) that work on `Monad`s, which `Identity` is member of (more on `Monad`s later).
 
-### [`Eq.ts`](https://gcanti.github.io/fp-ts/modules/Eq.ts.html)
+### [Eq.ts](https://gcanti.github.io/fp-ts/modules/Eq.ts.html)
 
 You can read the "Getting started" documentation on `Eq` on the `fp-ts` [documentation page](https://gcanti.github.io/fp-ts/getting-started/Eq.html) as well.
 
@@ -91,7 +91,7 @@ Closely connected with `Identity` is `Eq`. `Eq` contains types that admit _equal
 2. symmetry (`equals(x, y) === equals(y, x)`)
 3. transitivity(`equals(x, y) === true` and `equals(y, z) === true`, then `equals(x, z) === true`)
 
-### [`Ord.ts`](https://gcanti.github.io/fp-ts/modules/Ord.ts.html) and [`Ordering.ts`](https://gcanti.github.io/fp-ts/modules/Ordering.ts.html)
+### [Ord.ts](https://gcanti.github.io/fp-ts/modules/Ord.ts.html) and [Ordering.ts](https://gcanti.github.io/fp-ts/modules/Ordering.ts.html)
 
 Again, like `Eq` you can read the documentation on `Ord` on the [documentation page](https://gcanti.github.io/fp-ts/getting-started/Ord.html).
 
@@ -111,11 +111,11 @@ Instance of `Ord` must adhere to the following laws:
 2. antisymmetry (`compare(x, y) <= 0` and `compare(y, x) <= 0` then `x === y`)
 3. transitivity(`compare(x, y) <= 0` and `compare(y, z) <= 0`, then `compare(x, z) <= 0`)
 
-### [`Bounded.ts`](https://gcanti.github.io/fp-ts/modules/Bounded.ts.html)
+### [Bounded.ts](https://gcanti.github.io/fp-ts/modules/Bounded.ts.html)
 
 The `Bounded` type class is exactly what it sounds like: it contains an lower _and_ upper limit, such that `lower <= a <= upper`. It must also be a member of `Ord`. After all, how can we know if a member of the `Bounded` is between the lower and upper if we don't know how to compare them it.
 
-### [`Show.ts`](https://gcanti.github.io/fp-ts/modules/Show.ts.html)
+### [Show.ts](https://gcanti.github.io/fp-ts/modules/Show.ts.html)
 
 The `Show` type class is also aptly named. It represents types that can be converted into a human-readable string.
 
@@ -180,6 +180,8 @@ Okay, back to the ethereal stuff. Yay!...
 A single interface that defines a Magma containing a non-empty set with the binary operation `concat`, which combines them into a single set, removing all duplicates.
 
 ### [Semigroupoid.ts](https://gcanti.github.io/fp-ts/modules/Semigroupoid.ts.html)
+
+![I know some of those words](https://media0.giphy.com/media/3osxYbgtOZrFW2C81O/source.gif)
 
 Semigroupoid? Sounds sexy 🤔
 
@@ -407,12 +409,12 @@ If you have decided to continue reading or have come back to this section (welco
 
 ### [JoinSemilattice.ts](https://gcanti.github.io/fp-ts/modules/JoinSemilattice.ts.html)
 
-|              |                                                                               |
-| ------------ | ----------------------------------------------------------------------------- |
-| Definition   | A magma whose binary operation ^ (join) defines the least upper bound.        |
-|              | Join is associative, commutative, and [idempotent](#mathematical-properties). |
-| Extends      | Magma                                                                         |
-| What it Adds | join                                                                          |
+|              |                                                                                                                       |
+| ------------ | --------------------------------------------------------------------------------------------------------------------- |
+| Definition   | A partially-ordered set whose binary operation ^ (join) defines the least upper bound for any nonempty finite subset. |
+|              | Join is associative, commutative, and [idempotent](#mathematical-properties).                                         |
+| Extends      | Magma                                                                                                                 |
+| What it Adds | join                                                                                                                  |
 
 ##### Examples
 
@@ -424,12 +426,12 @@ A single interface `JoinSemilattice` which defines the type for the `join` metho
 
 ### [MeetSemilattice.ts](https://gcanti.github.io/fp-ts/modules/MeetSemilattice.ts.html)
 
-|              |                                                                               |
-| ------------ | ----------------------------------------------------------------------------- |
-| Definition   | A magma whose binary operation ∨ (meet) defines the greatest lower bound.     |
-|              | Meet is associative, commutative, and [idempotent](#mathematical-properties). |
-| Extends      | Magma                                                                         |
-| What it Adds | meet                                                                          |
+|              |                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Definition   | A partially-ordered set whose binary operation ∨ (meet) defines the greatest lower bound for any nonempty finite subset. |
+|              | Meet is associative, commutative, and [idempotent](#mathematical-properties).                                            |
+| Extends      | Magma                                                                                                                    |
+| What it Adds | meet                                                                                                                     |
 
 ##### Examples
 
@@ -527,14 +529,11 @@ A single interface `BoundedSemilattice` which extends `BoundedJoinSemilattice` a
 
 ### [BoundedDistributiveLattice.ts](https://gcanti.github.io/fp-ts/modules/BoundedDistributiveLattice.ts.html)
 
-|              |                                                                                        |
-| ------------ | -------------------------------------------------------------------------------------- |
-| Definition   | A combination of the laws of bounded- and distributive-semilattices. That is,          |
-|              | Its greatest upper bound is 1 and its greatest lower bound is 0.                       |
-|              | It must also follow the [absorbtion](#mathematical-properties) laws for meet and join. |
-|              | A lattice which must exhibit the distributive property for join and meet.              |
-| Extends      | BoundedJoinSemilattice, BoundedMeetSemilattice                                         |
-| What it Adds | one                                                                                    |
+|              |                                                                                                                                                                                                                                                                                                                                |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Definition   | An intersection of the laws of bounded- and distributive-semilattices: <br> 1. Its greatest upper bound is 1 and its greatest lower bound is 0. <br>2. It must also follow the [absorbtion](#mathematical-properties) laws for meet and join.<br> 3. A lattice which must exhibit the distributive property for join and meet. |
+| Extends      | BoundedJoinSemilattice, BoundedMeetSemilattice                                                                                                                                                                                                                                                                                 |
+| What it Adds | one                                                                                                                                                                                                                                                                                                                            |
 
 ##### Examples
 
@@ -546,15 +545,67 @@ A single interface `BoundedDistributiveSemilattice` which extends `BoundedSemila
 
 A function `getMinMaxBoundedDistributiveLattice` which given an `Ord<A>` returns a `BoundedDistributiveLattice<A>`.
 
-### `HeytingAlgebra.ts`
+### [HeytingAlgebra.ts](https://gcanti.github.io/fp-ts/modules/HeytingAlgebra.ts.html)
 
 No, it's not the emotion you're feeling after reading through all these definitions.
 
-|||
-|---|---|
-|Definition|A bounded-distributive-semilattice that includes both a `not` and an `implies`|
- method. `implies` defines a function that returns 1 if left value is less than or equal to the right. Otherwise it returns the right. The not function can be defined as `a` implies 0.
-### `BooleanAlgebra.ts`
+|              |                                                                                                                                                                                  |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Definition   | A bounded-distributive-semilattice that includes both a `not` and an `implies` method.                                                                                           |
+|              | `implies` defines a function that returns 1 if left value is less than or equal to the right. Otherwise it returns the right.<br>`not` function can be defined as `a` implies 0. |
+|              | Implication (→) must follow these laws: <br> `a → a = 1` <br> `a ∧ (a → b) = a ∧ b` <br> `b ∧ (a → b) = b` <br> `a → (b ∧ c) = (a → b) ∧ (a → c)`                                |
+|              | Not (*) must follow the following laws: <br> `*a = a → 0 `                                                                                                                       |
+| Extends      | BoundedDistributiveLattice                                                                                                                                                       |
+| What it Adds | implies, not                                                                                                                                                                     |
+
+It's important to note (and is defined as such in `fp-ts`) that it cannot be stated as true that `a v not(a) === 0`. This is because Heyting Algebra does not include the law of excluded middle, which excludes anything between the lowest upper bound and greatest lower bounds. See examples for a more concrete example.
+
+##### Example
+
+    const implies = <A>(p: A, q: A) => p >= q ? 1 : q;
+    const not = implies(p, 0);
+
+    // not can also be written as follows, but this is not how it is strictly defined in Heyting Algebra
+    // const not = <A>(p: A, q: A) => p >= q ? 1 : 0;
+
+    // Example of Heyting Algebra:
+    { 0, 0.5, 1}
+
+    implies(0, 0.5) // 1
+    implies(0.5, 0) // 0
+    implies(1, 0.5) // 0.5
+    implies(0.5, 0.5) // 1
+    not(1) // 0
+    not(0) // 1
+    not(0.5) // 0
+
+    0.5 v not(0.5) // 0.5
+
+### [BooleanAlgebra.ts](https://gcanti.github.io/fp-ts/modules/BooleanAlgebra.ts.html)
+
+|              |                                                                                                                                                                             |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Definition   | Heyting Algebra with that includes the law of excluded middle. Put simply, it's is a set made up of only 1's and 0's. <br> As a result, the following is true: `a ∨ *a = 1` |
+| Extends      | HeytingAlgebra                                                                                                                                                              |
+| What it Adds | Law of excluded middle, i.e. there can be no members of the set between the least upper bound (1) and the greatest upper bound (0).                                         |
+
+##### Example
+
+    // Boolean set
+    { 0, 1 }
+
+    *1 // 0
+    1 v *1 // 1
+    *0 // 1
+    0 v *0 // 1
+
+##### Counterexample
+
+    // most simple, non-Boolean Heyting Algebra set
+    { 0, 0.5, 1 }
+
+    *0.5 // 0
+    0.5 v *0.5 // 0.5 (does not equal 1, so not a Boolean Algebra)
 
 ---
 
@@ -564,7 +615,7 @@ You made it! Congrats! You crawled out from the deep dark cave and your eyes are
 
 ![Trying to read an actual map when I don’t have Google Maps to tell me where I am](https://i.makeagif.com/media/6-08-2016/rHBP08.gif)
 
-### [`Functor.ts`](https://gcanti.github.io/fp-ts/modules/Functor.ts.html) and [`FunctorWithIndex.ts`](https://gcanti.github.io/fp-ts/modules/FunctorWithIndex.ts.html)
+### [Functor.ts](https://gcanti.github.io/fp-ts/modules/Functor.ts.html) / [FunctorWithIndex.ts](https://gcanti.github.io/fp-ts/modules/FunctorWithIndex.ts.html)
 
 `fp-ts` has a [page](https://gcanti.github.io/fp-ts/getting-started/Functor.html) dedicated to `Functor`s in "Getting Started".
 
@@ -595,7 +646,7 @@ This is useful for objects like `array` or even `record`, and a lot of functors 
 
 Keep functors in mind going forward. They will build the basis of (almost) everything else we are going to look at here. We are going to step away from them for just a moment, but fret not. Absence only makes the heart grow fonder.
 
-### [`Foldable.ts`](https://gcanti.github.io/fp-ts/modules/Foldable.ts.html) and [`FoldableWithIndex.ts`](https://gcanti.github.io/fp-ts/modules/FoldableWithIndex.ts.html)
+### [Foldable.ts](https://gcanti.github.io/fp-ts/modules/Foldable.ts.html) / [FoldableWithIndex.ts](https://gcanti.github.io/fp-ts/modules/FoldableWithIndex.ts.html)
 
 Folding, or reducing, as it's more commonly referred to in JavaScript, is process of, well, processing all of the elements in a container and returning a value. A common example would be `Array.prototype.reduce`, which allows you to take a list of integers `[ 1, 2, 3 ]` and return its sum, `6`. What you may not have realized is that folding is done recursively. Therefore, a more formal definition of a `Foldable` might be:
 
@@ -611,7 +662,7 @@ However, it's importantly to realize that a `Foldable` is not necessarily a `Fun
 
 As you can see, it returns the value of `B` not `F<B>`.
 
-### [`Unfoldable.ts`](https://gcanti.github.io/fp-ts/modules/Unfoldable.ts.html)
+### [Unfoldable.ts](https://gcanti.github.io/fp-ts/modules/Unfoldable.ts.html)
 
 Although you may have understandably assumed that an `Unfoldable` is simply a data type that cannot be folded, that is not the case. Remember, any type class that does not extend `Foldable` would fit that definition.
 
@@ -619,9 +670,9 @@ Instead of a type class that is _not able_ to be _folded_, an `Unfoldable` is _a
 
 `fp-ts`'s `unfold` function (no not `unreduce`) is the reverse of `reduce`. Where `reduce` takes a collection of values and returns a single return value, `unfold` takes a seed value (or values) and returns a collection of values. Maybe the easiest way to think of this is the (reverse) Fibonnacci sequence. Given the first two values (1, 1), `unfold` would apply a function `([a, b, ...acc]) => [ a + b, b, a, ...acc]`. An `unfold` would have some arbirary breakpoint, since it could generate this sequence forever.
 
-### [`Traversable.ts`](https://gcanti.github.io/fp-ts/modules/Traversable.ts.html) and [`TraversableWithIndex.ts`](https://gcanti.github.io/fp-ts/modules/TraversableWithIndex.ts.html)
+### [Traversable.ts](https://gcanti.github.io/fp-ts/modules/Traversable.ts.html) / [TraversableWithIndex.ts](https://gcanti.github.io/fp-ts/modules/TraversableWithIndex.ts.html)
 
-### [`Compactable.ts`](https://gcanti.github.io/fp-ts/modules/Compactable.ts.html)
+### [Compactable.ts](https://gcanti.github.io/fp-ts/modules/Compactable.ts.html)
 
 Compactable are data structures that can be compacted/filtered. They are not functors, per se, since they cannot map any function over their value. We cna use these classes to provide the ability to operate on a data type by eliminating intermediate `None`s (see [Option.ts](#optionts)) below.
 
@@ -635,7 +686,7 @@ They take define two functions, `compact` and `separate` as such:
 
 In this file, we also get the `Separated` type class. We'll discuss this more when we discuss `Either` below.
 
-### [`Filterable.ts`](https://gcanti.github.io/fp-ts/modules/Filterable.ts.html) and [`FilterableWithIndex.ts`](https://gcanti.github.io/fp-ts/modules/FilterableWithIndex.ts.html)
+### [Filterable.ts](https://gcanti.github.io/fp-ts/modules/Filterable.ts.html) / [FilterableWithIndex.ts](https://gcanti.github.io/fp-ts/modules/FilterableWithIndex.ts.html)
 
 While a `Compactible` can only perform `compact` or `separate` on its value, a `Filterable` can perform an given `Predicate` on its value since it is a member of the `Functor` type class. This gives us greater control over what we filter.
 
@@ -645,7 +696,7 @@ A filterable defines two sets of function pairs: `filter` / `filterMap` and `par
 
 `partition` / `partitionMap` separate the values into a `Separated` type class with `left` and `right` values. `partition` uses a boolean return value, while `partitionMap` uses an `Either` return value. More on `Separated` when we discuss `Either` below.
 
-### [`Witherable.ts`](https://gcanti.github.io/fp-ts/modules/Witherable.ts.html)
+### [Witherable.ts](https://gcanti.github.io/fp-ts/modules/Witherable.ts.html)
 
 <!-- Combines Traversable and Filterable -->
 
@@ -655,7 +706,7 @@ A filterable defines two sets of function pairs: `filter` / `filterMap` and `par
 
 ### `Bifunctor.ts`
 
-### [`Alt.ts`](https://gcanti.github.io/fp-ts/modules/Alt.ts.html)
+### [Alt.ts](https://gcanti.github.io/fp-ts/modules/Alt.ts.html)
 
 `Alt` is a `Functor` that can perform `alt` on a value. `alt` is similar to composing functions, except that it works on type classes instead. In fact, in `Alt`'s description, `fp-ts` draws a parallel between it and `Semigroup` (if you'll recall, a `Semigroup` had to allow for associative composition of its morphisms).
 
@@ -664,19 +715,19 @@ In the same way, the composition of `Alt` must follow the rules of:
 1. associativity: `A.alt(A.alt(fa, ga), ha) = A.alt(fa, A.alt(ga, ha))`
 2. distributivity: `A.map(A.alt(fa, ga), ab) = A.alt(A.map(fa, ab), A.map(ga, ab))`
 
-### [`Extend.ts`](https://gcanti.github.io/fp-ts/modules/Extend.ts.html)
+### [Extend.ts](https://gcanti.github.io/fp-ts/modules/Extend.ts.html)
 
-### [`Comonad.ts`](https://gcanti.github.io/fp-ts/modules/Comonad.ts.html)
+### [Comonad.ts](https://gcanti.github.io/fp-ts/modules/Comonad.ts.html)
 
 `Comonad` is an `Extend`, but it allows for the operation of the function `extract`. To put it incredibly simply (almost too simply 🕵️‍♂️), it reverses the construction of the `Functor`, i.e. it extracts the value from the `Functor` and returns it to the world.
 
-### [`Profunctor.ts`](https://gcanti.github.io/fp-ts/modules/Profunctor.ts.html)
+### [Profunctor.ts](https://gcanti.github.io/fp-ts/modules/Profunctor.ts.html)
 
-### [`Strong.ts`](https://gcanti.github.io/fp-ts/modules/Strong.ts.html)
+### [Strong.ts](https://gcanti.github.io/fp-ts/modules/Strong.ts.html)
 
-### [`Choice.ts`](https://gcanti.github.io/fp-ts/modules/Choice.ts.html)
+### [Choice.ts](https://gcanti.github.io/fp-ts/modules/Choice.ts.html)
 
-### [`Apply.ts`](https://gcanti.github.io/fp-ts/modules/Choice.ts.html)
+### [Apply.ts](https://gcanti.github.io/fp-ts/modules/Apply.ts.html)
 
 `Apply` is a direct decendant of a `Functor` and we're zeroing in on our ultimate goal here, so stay with me! An `Apply` defines the function `ap`, which which is used to apply a function to an argument under a type constructor.
 
@@ -691,26 +742,39 @@ ap: <A, B>(fab:  F<AtoB>, fa: F<A>) => F<B>
 
 In addition to the `Functor` laws, instance of `Apply` must follow the associative composition property for `ap`:
 
-```
-F.ap(
+    // F is a functor
+    // bc is a function that takes b and returns c. fab is a functor of such a function
+    // ab is a function that takes a and returns b. fab is a functor of such a function
+    // fa  is a functor of a
     F.ap(
-        F.map(
-            fbc,
-            bc => ab => a => bc( ab( a ) )
-        ), fab
-    ), fa
-) = F.ap( fbc, F.ap( fab, fa ) )
-```
+        F.ap(
+            F.map(
+                fbc,
+                bc => ab => a => bc( ab( a ) ) ),
+            fab
+        ), fa
+    ) = F.ap( fbc, F.ap( fab, fa ) )
 
-What the holy mess? Let's ignore the outer F.ab, since it remains constant on both sides of the equation. This is saying that mapping a function to a functor and the applying the function of another functor to that function and then applying the value of a functor to that function (huh???) is the same as applying the value of a functor to the function of the same functor type and then applying that result to the
+What the holy mess? Let's first start with the problem both sides of the equation is trying to solve. We need to apply the value of `fa` to `fab` and then apply that return value to `fbc`, which is our answer.
 
-# TBFinished
+At this point, you might be saying, Why don't we just take all of these values out and work on them, then put them back into the container. That may seem simple on paper, but let's use a metaphor for a second. We have an assembly line that make sandwiches. We need to take the bread out of the package and put two ingredients in it. The first thing that comes along is bread, ham, and cheese. Okay, take the cheese and ham out, stick it between the bread, and put it back in the container (functor). Maybe not super sanitary, and our hands are a little greasy, but the sandwich is made and packed! Okay, feeling confident, let's take sandwich two. Oh s&\$@. Peanut butter and jelly. Damn, we threw out the container, which was a nice squeeze bottle. Oh, what a mess! It's everywhere! Oh, the humanity.
 
-### [`Chain.ts`](https://gcanti.github.io/fp-ts/modules/Chain.ts.html)
+Okay, so we've decided not to take things out of their containers willy-nilly. They're in there for a reason after all.
+
+So, let's brainstorm with our fellow programmers. Jeff the new guy raises his hand. He has an idea! Let's map the functor `fbc` to a function takes `bc`, store that in a function, and apply that to the functor `fab`, and then apply that to `fa`. Done! Jeff sits back in his chair appreciates the stunned silence.
+
+Except we're not stunned at your genius Jeff! We're stunned at how convolutedly stupid that was! Go on a coffee run Jeff and think about what you've done.
+
+![you're wrong gif](https://cdn.business2community.com/wp-content/uploads/2013/04/Parks-and-Rec-Ben-1.gif)
+Instead of all that awful nesting and writing a separate function that's just going to apply functions to it (gross!) and then mapping that to `fbc`, let's apply `fa` to `fab`, and then apply that to `fbc`.
+
+That's all this is saying. Instead of writing a separate function that takes functions and finally applies them to some argument, let's just apply the values of the functors as needed, in an order that makes sense.
+
+### [Chain.ts](https://gcanti.github.io/fp-ts/modules/Chain.ts.html)
 
 `Chain` extends `Apply` with the addition `chain` operation. `chain` is an incredibly powerful tool in functional programming, so make sure you understand it. In fact, if you know `map`, `ap`, and `chain` you can do some amazing things in FP. That's where the long awaited `Monad` comes into play, but we'll get there shortly.
 
-`map` and `chain` may seem similar at first. Both take a first `Functor` of some value and perform a second function on it. The difference is the type of function that is passed in.
+`map` and `chain` may seem similar at first. Both take a `Functor` of some value and a handler function and apply that functors value to the function. The difference is the type of the handler.
 
     // functor
     fa: F<A>
@@ -725,15 +789,24 @@ What the holy mess? Let's ignore the outer F.ab, since it remains constant on bo
     chain(fa, chainHandler)
     // F<B>
 
-Do you see it? The `mapHandler` takes `F<A>` as an argument and `chainHandler` takes simply `A`. `chain` applies the function to the _value_ of the functor passed in, while `map` applies the function to the functor itself. `chain` allows us to write functions that can take simply a value and return a functor and apply them to _either_ a non-functor `chainHandler(a)` or a functor of the same value type `chain(fa, chainHandler)`.
+Do you see it? The `mapHandler` takes `F<A>` as an argument and `chainHandler` takes simply `A`. `chain` applies the function to the _value_ of the functor passed in, while `map` applies the function to the functor itself. `chain` allows us to write functions that can simply take a value and return a functor and apply them to _either_ a non-functor `chainHandler(a)` or a functor of the same value type `chain(fa, chainHandler)`.
 
-### [`ChainRec.ts`](https://gcanti.github.io/fp-ts/modules/ChainRec.ts.html)
+However, it is important to note that the `chainHandler` always returns the type of functor that `chain` is acting on. For example, this doesn't work:
 
-### `Applicative.ts`
+    import { chain } from 'fp-ts/lib/Record';
+
+    const chainHandler = (a: number): number => a * 2;
+    const fa = [2, 3, 4]; // remember, an array is a functor
+
+    chain(fa, chainHandler) // Error
+
+### [ChainRec.ts](https://gcanti.github.io/fp-ts/modules/ChainRec.ts.html)
+
+### [Applicative.ts](https://gcanti.github.io/fp-ts/modules/Applicative.ts.html)
 
 [page](https://gcanti.github.io/fp-ts/getting-started/Applicative.html)
 
-### [`Alternative.ts`](https://gcanti.github.io/fp-ts/modules/Alternative.ts.html)
+### [Alternative.ts](https://gcanti.github.io/fp-ts/modules/Alternative.ts.html)
 
 `Alternative` extends `Alt` and `Applicative`, but like `Monoid` compared to `Semigroup`, it must now allow for an identity element, in this case a `zero` function.
 
@@ -745,7 +818,7 @@ Do you see it? The `mapHandler` takes `F<A>` as an argument and `chainHandler` t
 4. Distributivity: A.ap( A.alt( fab, gab ), fa ) = A.alt( A.ap( fab, fa ), A.ap( gab, fa ) )
 5. Annihilation: A.ap( zero, fa ) = zero
 
-### `Monad.ts`
+### [Monad.ts](https://gcanti.github.io/fp-ts/modules/Monad.ts.html)
 
 [page](https://gcanti.github.io/fp-ts/getting-started/Monad.html)
 
@@ -763,11 +836,172 @@ Do you see it? The `mapHandler` takes `F<A>` as an argument and `chainHandler` t
 
 <!-- Compactable's Separated -->
 
-### `Array.ts`, `NonEmptyArray.ts`, and `Tuple.ts`
+### [Array.ts](https://gcanti.github.io/fp-ts/modules/Array.ts.html), [NonEmptyArray.ts](https://gcanti.github.io/fp-ts/modules/NonEmptyArray.ts.html), and [Tuple.ts]((https://gcanti.github.io/fp-ts/modules/Tuple.ts.html))
+
+| Function       | Array | NEA | Tuple | Definition                                                                                                                                                                                                                                                                         |
+| -------------- | :---: | :-: | :---: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| chop           |   X   |     |       | A useful recursion pattern for processing an array to produce a new array, often used for “chopping” up the input array. Typically chop is called with some function that will consume an initial prefix of the array and produce a value and the rest of the array.               |
+| chunksOf       |   X   |     |       | Splits an array into length-n pieces. The last piece will be shorter if n does not evenly divide the length of the array. Note that `chunksOf(n)([])` is `[]`, not `[[]]`. This is intentional, and is consistent with a recursive definition of chunksOf                          |
+| comprehension  |   X   |     |       |                                                                                                                                                                                                                                                                                    |
+| cons           |   X   |  X  |       | Attaches an element to the front of an array, creating a new non empty array                                                                                                                                                                                                       |
+| copy           |   X   |  X  |       |                                                                                                                                                                                                                                                                                    |
+| deleteAt       |   X   |     |       | Delete the element at the specified index, returning an `Option` (`None` if the index is out of bounds)                                                                                                                                                                            |
+| difference     |   X   |     |       | Creates an array of array values not included in the other given array using a Eq for equality comparisons. The order and references of result values are determined by the first array.                                                                                           |
+| dropLeft       |   X   |     |       | Drop a number of elements from the start of an array, creating a new array                                                                                                                                                                                                         |
+| dropLeftWhile  |   X   |     |       | Remove the longest initial subarray for which all element satisfy the specified predicate, creating a new array                                                                                                                                                                    |
+| dropRight      |   X   |     |       | Drop a number of elements from the end of an array, creating a new array                                                                                                                                                                                                           |
+| elem           |   X   |     |       | Test if a value is a member of an array. Takes a `Eq<A>` as a single argument which returns the function to use to search for a value of type `A` in an array of type `Array<A>`.                                                                                                  |
+| findFirst      |   X   |     |       | Find the first element which satisfies a predicate (or a refinement) function                                                                                                                                                                                                      |
+| findFirstMap   |   X   |     |       | Find the first element returned by an option based selector function                                                                                                                                                                                                               |
+| findIndex      |   X   |     |       | Find the first index for which a predicate holds                                                                                                                                                                                                                                   |
+| findLast       |   X   |     |       | Find the last element which satisfies a predicate function                                                                                                                                                                                                                         |
+| findLastIndex  |   X   |     |       | Returns the index of the last element of the list which matches the predicate                                                                                                                                                                                                      |
+| findLastMap    |   X   |     |       | Find the last element returned by an option based selector function                                                                                                                                                                                                                |
+| flatten        |   X   |  X  |       | Removes one level of nesting                                                                                                                                                                                                                                                       |
+| foldLeft       |   X   |     |       | Break an array into its first element and remaining elements                                                                                                                                                                                                                       |
+| foldRight      |   X   |     |       | Break an array into its initial elements and the last element                                                                                                                                                                                                                      |
+| getApply       |       |     |   X   |                                                                                                                                                                                                                                                                                    |
+| getApplicative |       |     |   X   |                                                                                                                                                                                                                                                                                    |
+| getChain       |       |     |   X   |                                                                                                                                                                                                                                                                                    |
+| getChainRec    |       |     |   X   |                                                                                                                                                                                                                                                                                    |
+| getEq          |   X   |  X  |       | Derives an `Eq` over the Array of a given element type from the `Eq` of that type. The derived `Eq` defines two arrays as equal if all elements of both arrays are compared equal pairwise with the given `E`. In case of arrays of different lengths, the result is non equality. |
+| getMonad       |       |     |   X   |                                                                                                                                                                                                                                                                                    |
+| getMonoid      |   X   |     |       | Returns a Monoid for `Array<A>`                                                                                                                                                                                                                                                    |
+| getOrd         |   X   |     |       | Derives an Ord over the Array of a given element type from the Ord of that type. The ordering between two such arrays is equal to: the first non equal comparison of each arrays elements taken pairwise in increasing order, in case of equality over all the pairwise elements.  |
+|                |       |     |       | The longest array is considered the greatest, if both arrays have the same length, the result is equality.                                                                                                                                                                         |
+| getShow        |   X   |  X  |       | Derives a `Show` over an Array.                                                                                                                                                                                                                                                    |
+| head           |   X   |  X  |       | Get the first element in an array, or None if the array is empty                                                                                                                                                                                                                   |
+| init           |   X   |  X  |       | Get all but the last element of an array, creating a new array, or None if the array is empty                                                                                                                                                                                      |
+| insertAt       |   X   |  X  |       | Insert an element at the specified index, creating a new array, or returning None if the index is out of bounds                                                                                                                                                                    |
+| intersection   |   X   |     |       | Creates an array of unique values that are included in all given arrays using a Eq for equality comparisons. The order and references of result values are determined by the first array.                                                                                          |
+| isEmpty        |   X   |     |       | Test whether an array is empty                                                                                                                                                                                                                                                     |
+| isNonEmpty     |   X   |     |       | Test whether an array is non empty narrowing down the type to `NonEmptyArray<A>`                                                                                                                                                                                                   |
+| isOutOfBound   |   X   |     |       | Test whether an array contains a particular index                                                                                                                                                                                                                                  |
+| last           |   X   |  X  |       | Get the last element in an array, or `None` if the array is empty                                                                                                                                                                                                                  |
+| max            |       |  X  |       |                                                                                                                                                                                                                                                                                    |
+| min            |       |  X  |       |                                                                                                                                                                                                                                                                                    |
+| lefts          |   X   |     |       | Extracts from an array of `Either` all the `Left` elements. All the `Left` elements are extracted in order                                                                                                                                                                         |
+| lookup         |   X   |     |       | Read a value at a particular index from an array                                                                                                                                                                                                                                   |
+| makeBy         |   X   |     |       | Return a list of length `n` with element `i` initialized with `f(i)`                                                                                                                                                                                                               |
+| modifyAt       |   X   |  X  |       | Apply a function to the element at the specified index, creating a new array, or returning None if the index is out of bounds                                                                                                                                                      |
+| of             |   X   |  X  |       |                                                                                                                                                                                                                                                                                    |
+| range          |   X   |     |       | Create an array containing a range of integers, including both endpoints                                                                                                                                                                                                           |
+| replicate      |   X   |     |       | Create an array containing a value repeated the specified number of times                                                                                                                                                                                                          |
+| reverse        |   X   |  X  |       | Reverse an array, creating a new array                                                                                                                                                                                                                                             |
+| rights         |   X   |     |       | Extracts from an array of `Either` all the `Right` elements. All the `Right` elements are extracted in order                                                                                                                                                                       |
+| rotate         |   X   |     |       | Rotate an array to the right by `n` steps                                                                                                                                                                                                                                          |
+| scanLeft       |   X   |     |       | Same as `reduce` but it carries over the intermediate steps                                                                                                                                                                                                                        |
+| scanRight      |   X   |     |       | Same as `reduceRight` but it carries over the intermediate steps                                                                                                                                                                                                                   |
+| snoc           |   X   |  X  |       | Append an element to the end of an array, creating a new non empty array                                                                                                                                                                                                           |
+| concat         |       |  X  |       |                                                                                                                                                                                                                                                                                    |
+| fst            |       |     |  X    |                                                                                                                                                                                                                                                                                    |
+| snd            |       |     |   X   ||
+| sort | X | X | |Sort the elements of an array in increasing order, creating a new array |
+| sortBy | X | | | Sort the elements of an array in increasing order, where elements are compared using first `ords[0]`, then `ords[1]`, etc… |
+| spanLeft | X | | | |
+| splitAt | X | | | Split an array into two arrays, the longest initial subarray for which all elements satisfy the specified predicate and the remaining elements |
+| swap | | | X | |
+| tail | X | X | |Get all but the first element of an array, creating a new array, or `None` if the array is empty |
+| takeLeft | X | | |Keep only a number of elements from the start of an array, creating a new array. `n` must be a natural number |
+| takeLeftWhile | X | | | Calculate the longest initial subarray for which all element satisfy the specified predicate, creating a new array|
+| takeRight | X | | | Keep only a number of elements from the end of an array, creating a new array. n must be a natural number|
+| union | X | | | Creates an array of unique values, in order, from all given arrays using a `Eq` for equality comparisons|
+| uniq | X | | | Remove duplicates from an array, keeping the first occurrence of an element.|
+| unsafeDeleteAt | X | | | Same as `deleteAt`, except it returns an `Array<A>` instead of `Option<Array<A>>`, even if the index is out of bounds. |
+| unsafeInsertAt | X | | | Same as `insertAt`, except it returns an `Array<A>` instead of `Option<Array<A>>`, even if the index is out of bounds.  |
+| unsafeUpdateAt | X | | | Same as `updateAt`, except it returns an `Array<A>` instead of `Option<Array<A>>`, even if the index is out of bounds. |
+| unzip | X | | |The function is reverse of `zip`. Takes an array of pairs and return two corresponding arrays |
+| updateAt | X | X | |Change the element at the specified index, creating a new array, or returning `None` if the index is out of bounds |
+| zip | X | | | Takes two arrays and returns an array of corresponding pairs. If one input array is short, excess elements of the longer array are discarded|
+| zipWith | X | | | Apply a function to pairs of elements at the same index in two arrays, collecting the results in a new array. If one input array is short, excess elements of the longer array are discarded.|
+| alt | X | | | |
+| ap | X | X | | |
+| apFirst | X | X | | |
+| apSecond | X | X | | |
+| bimap | | | X | |
+| chain | X | X | | |
+| chainFirst | X | X | | |
+| compact | X | | | |
+| compose | | | X | |
+| duplicate | X | X | X | |
+| extend | X | X | X | |
+| filter | X | X | | |
+| filterMap | X | | | |
+| filterMapWithIndex | X | X | | |
+| filterWithIndex | X | | | |
+| foldArray | | X | | |
+| getSemigroup | | X | | |
+| group | | X | | |
+| groupBy | | X | | |
+| groupSort | | X | | |
+| foldMap | X | X | X | |
+| foldMapWithIndex | X | X | | |
+| map | X | X | X | |
+| mapLeft | | | X | |
+| mapWithIndex | X | X | | |
+| partition | X | | | |
+| partitionMap | X | | | |
+| partitionMapWithIndex | X | | | |
+| partitionWithIndex | X | | | |
+| reduce | X | X | X | |
+| reduceRight | X | X | X | |
+| reduceRightWithIndex | X | X | | |
+| reduceWithIndex | X | X | | |
+| separate | X | | | |
 
 ### `Records.ts` and `Map.ts`
 
 These are type classes representing JavaScript objects and ES6 Maps respectively. For more on the differences, see [the MDN page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#Objects_and_maps_compared).
+
+| function               | Record | Map | Definition                                                                                                                            |
+| ---------------------- | :----: | :-: | ------------------------------------------------------------------------------------------------------------------------------------- |
+| collect                |   X    |  X  | Map a record/map into an array using a handler function.                                                                              |
+| deleteAt               |   X    |  X  | Delete a key and value from a map/record.                                                                                             |
+| elem                   |   X    |  X  | Test whether or not a value is a member of a map/record.                                                                              |
+| every                  |   X    |     | Test whether or not a condition holds true for each value of a record.                                                                |
+| filterMapWithIndex     |   X    |     | `filterMap` with an additional parameter to keep track of the key.                                                                    |
+| foldMapWithIndex       |   X    |     | Given a function that can fold the values of a record, returns the folded value/accumulator.                                          |
+| fromFoldable           |   X    |  X  | Create a record/map from a foldable collection of key/value pairs, using the specified `Magma` to combine values for duplicate keys.  |
+| fromFoldableMap        |   X    |     | Same as `fromFoldable`, but supplies additional function to map values to keys.                                                       |
+| getEq                  |   X    |  X  | Create an `Eq` of a record or map, with type signature `Eq<Record<K, A>>` / `Eq<Map<K, A>>`                                           |
+| getFilterableWithIndex |        |  X  |                                                                                                                                       |
+| getMonoid              |   X    |  X  | Returns a `Semigroup` instance for records/maps given a `Semigroup` instance of their values.                                         |
+| getShow                |   X    |  X  | Returns a `Show` instance for records/maps.                                                                                           |
+| hasOwnProperty         |   X    |     | Given a string `k` and a record `R`, returns the string as `keyof R` if the record has the property.                                  |
+| getWitherable          |        |  X  |                                                                                                                                       |
+| insertAt               |   X    |  X  | Insert or replace a key/value pair in a record/map.                                                                                   |
+| isEmpty                |   X    |  X  | Test whether a record/map is empty.                                                                                                   |
+| isSubrecord / isSubmap |   X    |  X  | Test whether one record/map contains all of the keys and values contained in another record/map                                       |
+| keys                   |   X    |  X  | Get an array of keys contained in a record/map. For a map, the array is sorted.                                                       |
+| lookup                 |   X    |  X  | Lookup the value for a key in a record/map. Returns an `Option` of the value.                                                         |
+| lookupWithKey          |        |  X  | Lookup the value for a key in a map. If the result is a `Some`, the existing key is also returned as tuple as `Option<[key, value]>`. |
+| member                 |        |  X  | Test whether or not a key is a member of a map. To test for a value in a map, see `elem`.                                             |
+| modifyAt               |   X    |  X  | Modifies a value at a key in a record/map given a function. Returns an `Option` of the record/map.                                    |
+| pop                    |   X    |  X  | Delete a key and value from a record/map, returning the value as well as the subsequent record/map as an `Option` containing a tuple. |
+| reduceRightWithIndex   |   X    |     | Same as the `reduceRight` function, but takes a first parameter that tracks the current key.                                          |
+| reduceWithIndex        |   X    |     | Same as the `reduce` function, but takes a first parameter that tracks the current key.                                               |
+| sequence               |   X    |     |                                                                                                                                       |
+| singleton              |   X    |  X  | Create a record/map with one key/value pair                                                                                           |
+| size                   |   X    |  X  | Calculate the number of key/value pairs in a record/map.                                                                              |
+| some                   |   X    |     | Maps a predicate to a record, and returns true if any of the individual values return true.                                           |
+| traverse               |   X    |     |                                                                                                                                       |
+| traverseWithIndex      |   X    |     |                                                                                                                                       |
+| toArray                |   X    |  X  | Get an array of the key/value pairs contained in a record/map. For a map, the array is sorted.                                        |
+| toUnfoldable           |   X    |  X  | Unfolds a record/map into a list of key/value pairs                                                                                   |
+| updateAt               |   X    |  X  | Modifies a value at a key in a record/map given a value. Returns an `Option` of the record/map.                                       |
+| values                 |        |  X  | Get a sorted array of the values contained in a map                                                                                   |
+| compact                |   X    |  X  | Given a record of `Option` values, returns those values which evaluate to a `some`.                                                   |
+| filter                 |   X    |  X  | Filter a record using a function that returns a boolean.                                                                              |
+| filterMap              |   X    |  X  | Filter a record using a function that returns an `Option`.                                                                            |
+| map                    |   X    |  X  | Apply a function to each of the keys in a record/map.                                                                                 |
+| mapWithIndex           |   X    |     | Map a record passing the keys to the iterating function                                                                               |
+| partition              |   X    |  X  | Separates the values into a `Separated` type class with `left` and `right` values using a function that returns a boolean.            |
+| partitionMap           |   X    |  X  | Separates the values into a `Separated` type class with `left` and `right` values using a function that returns an `Option`.          |
+| partitionWithIndex     |   X    |     | `partition` that takes an additional parameter, which tracks the current key.                                                         |
+| partitionMapWithIndex  |   X    |     | `partitionMap` that takes an additional parameter, which tracks the current key.                                                      |
+| reduce                 |   X    |     | Folds all of the values in a record into an accumulator value, starting at the first value.                                           |
+| reduceRight            |   X    |     | Folds all of the values in a record into an accumulator value, starting at the last value.                                            |
+| separate               |   X    |  X  | Given a record whose values are of type `Either<A, B>`, returns a `Separated<Record<string, A>, Record<string, B>>`                   |
 
 ### `Task.ts`, `TaskEither.ts`, and `TaskThese.ts`
 
