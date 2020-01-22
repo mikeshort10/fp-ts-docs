@@ -411,14 +411,17 @@ If you have decided to continue reading or have come back to this section (welco
 
 |              |                                                                                                                       |
 | ------------ | --------------------------------------------------------------------------------------------------------------------- |
-| Definition   | A partially-ordered set whose binary operation ^ (join) defines the least upper bound for any nonempty finite subset. |
+| Definition   | A partially-ordered set whose binary operation v (join) defines the least upper bound for any nonempty finite subset. |
 |              | Join is associative, commutative, and [idempotent](#mathematical-properties).                                         |
 | Extends      | Magma                                                                                                                 |
 | What it Adds | join                                                                                                                  |
 
-##### Examples
+##### Example
 
-##### Counterexamples
+    // { 1, 2, 3, 4, 5}
+    1 v 5 === 5
+    2 v 3 === 3
+    1 v 1 === 1
 
 ##### What this module contains
 
@@ -428,14 +431,17 @@ A single interface `JoinSemilattice` which defines the type for the `join` metho
 
 |              |                                                                                                                          |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| Definition   | A partially-ordered set whose binary operation ∨ (meet) defines the greatest lower bound for any nonempty finite subset. |
+| Definition   | A partially-ordered set whose binary operation ^ (meet) defines the greatest lower bound for any nonempty finite subset. |
 |              | Meet is associative, commutative, and [idempotent](#mathematical-properties).                                            |
 | Extends      | Magma                                                                                                                    |
 | What it Adds | meet                                                                                                                     |
 
-##### Examples
+##### Example
 
-##### Counterexamples
+    // { 1, 2, 3, 4, 5 }
+    1 ^ 5 === 1
+    2 ^ 3 === 2
+    1 ^ 1 === 1
 
 ##### What this module contains
 
@@ -450,9 +456,12 @@ A single interface `MeetSemilattice` which defines the type for the `meet` metho
 | Extends      | MeetSemilattice, JoinSemilattice                                                                                         |
 | What it Adds | N/A                                                                                                                      |
 
-##### Examples
+##### Example
 
-##### Counterexamples
+    // { 1, 2, 3, 4, 5 }
+    1 v 5 === 5
+    4 ^ 3 === 3
+    2 v 2 === 1
 
 ##### What this module contains
 
@@ -466,9 +475,11 @@ A single interface `Lattice` which extends `JoinSemilattice` and `MeetSemilattic
 | Extends      | Lattice                                                                        |
 | What it Adds | N/A                                                                            |
 
-##### Examples
+##### Example
 
-##### Counterexamples
+    // { 1, 2, 3, 4, 5 }
+    1 v (5 ^ 4) === (1 v 5) ^ (1 v 4) // 4
+    1 ^ (5 v 4) === (1 ^ 5) v (1 ^ 4) // 1
 
 ##### What this module contains
 
@@ -485,9 +496,16 @@ A function `getMinMaxDistributiveLattice` which given an `Ord<A>` returns a `Dis
 | Extends      | JoinSemilattice                                                                 |
 | What it Adds | zero                                                                            |
 
-##### Examples
+##### Example
 
-##### Counterexamples
+    // { 0, 1, 2, 3, 4, 5}
+    1 v 5 === 5
+    2 v 0 === 2
+
+##### Counterexample
+
+    // { -1, 0, 1, 2, 3, 4, 5}
+    -1 v 0 !== -1
 
 ##### What this module contains
 
@@ -502,9 +520,16 @@ A single interface `BoundedJoinSemilattice` which extends `JoinSemilattice` and 
 | Extends      | MeetSemilattice                                                                 |
 | What it Adds | one                                                                             |
 
-##### Examples
+##### Example
 
-##### Counterexamples
+    // { -2, -1, 0, 0.5, 1}
+    -2 v 1 === 1
+    1 v 0.5 === 1
+
+##### Counterexample
+
+    // { -1, 0, 1, 2 }
+    2 ^ 1 !== 2
 
 ##### What this module contains
 
@@ -519,9 +544,21 @@ A single interface `BoundedMeetSemilattice` which extends `MeetSemilattice` and 
 | Extends      | BoundedJoinSemilattice, BoundedMeetSemilattice                                                                                                  |
 | What it Adds | one                                                                                                                                             |
 
-##### Examples
+##### Example
 
-##### Counterexamples
+    // { 0, 0.25, 0.5, 0.75, 1 }
+    1 v 0.75 === 1
+    2 ^ 0 === 0
+
+    //Absorbtion Join
+    0.25 ^ (0.25 v 0.75) === 0.25
+
+    //Absorbtion Meet
+    0.5 v (0.5 ^ 1) === 0.5
+
+##### Counterexample
+
+See BoundedJoinLattice and BoundedMeetLattice above.
 
 ##### What this module contains
 
@@ -535,9 +572,25 @@ A single interface `BoundedSemilattice` which extends `BoundedJoinSemilattice` a
 | Extends      | BoundedJoinSemilattice, BoundedMeetSemilattice                                                                                                                                                                                                                                                                                 |
 | What it Adds | one                                                                                                                                                                                                                                                                                                                            |
 
-##### Examples
+##### Example
 
-##### Counterexamples
+    // { 0, 0.25, 0.5, 0.75, 1 }
+    1 v 0.75 === 1
+    2 ^ 0 === 0
+
+    //Absorbtion Join
+    0.25 ^ (0.25 v 0.75) === 0.25
+
+    //Absorbtion Meet
+    0.5 v (0.5 ^ 1) === 0.5
+
+    //Distributive
+    0 v (1 ^ 0.5) === (0 v 1) ^ (0 v 0.5) // 0.5
+    1 ^ (0.25 v 0) === (1 ^ 0.25) v (1 ^ 0) // 0.25
+
+##### Counterexample
+
+See BoundedJoinLattice and BoundedMeetLattice above.
 
 ##### What this module contains
 
@@ -896,67 +949,68 @@ The `Applicative` must follow these additional laws:
 | reduceRight       |                                                                                                                                                                                                                       |
 | separate          | Given an `Option` of `Either<A, B>`, returns a `Separated<Option<A>, Option<B>>`                                                                                                                                      |
 
-### [Either.ts](https://gcanti.github.io/fp-ts/modules/Either.ts.html), [These.ts](https://gcanti.github.io/fp-ts/modules/These.ts.html), and [ValidationT.ts](https://gcanti.github.io/fp-ts/modules/ValidationT.ts.html)
+### [Either.ts](https://gcanti.github.io/fp-ts/modules/Either.ts.html) / [These.ts](https://gcanti.github.io/fp-ts/modules/These.ts.html) / [ValidationT.ts](https://gcanti.github.io/fp-ts/modules/ValidationT.ts.html)
 
 <!-- Compactable's Separated -->
 
-| Name                   | Either | These | Definition                                                                                                                                                                                                                                             |
-| ---------------------- | :----: | :---: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| both                   |        |   X   |
-| elem                   |   X    |       | Tests whether an `Either` is a `Right` and has a value is equal to a given value.                                                                                                                                                                      |
-| exists                 |   X    |       | If the `Either` is a `Right` returns the boolean value of the `Predicate`. If its a `Left`, returns `false`.                                                                                                                                           |
-| fold                   |   X    |   X   | Takes two functions, and applies one, depending on whether the `Either` is a `Left` or `Right` respectively.                                                                                                                                           |
-| fromNullable           |   X    |       | Takes a default and nullable value. If the value is not nully, returns a `Right` value, else returns the `Left` default value.                                                                                                                         |
-| fromOptions            |        |   X   | Takes a pair of `Option`s and attempts to create a `These` from them                                                                                                                                                                                   |
-| getApplyMonoid         |   X    |       |                                                                                                                                                                                                                                                        |
-| getApplySemigroup      |   X    |       |                                                                                                                                                                                                                                                        |
-| getEq                  |   X    |       | Takes an `Eq` for the left and right value, and returns an `Eq` for the `Either` / `These`.                                                                                                                                                            |
-| getLeft                |        |   X   | Returns an `Option` from a `These`'s left. If there's not a left, returns a `None`.                                                                                                                                                                    |
-| getLeftOnly            |        |   X   | Returns an `Option` from a `These`'s left, but only if it was constructed with `Left`, not `Both`.                                                                                                                                                     |
-| getMonad               |        |   X   |                                                                                                                                                                                                                                                        |
-| getOrElse              |   X    |       | Takes a function `onLeft`, and returns the `Right` value or the result of the `onLeft` function, which returns the same type as the `Either`'s right.                                                                                                  |
-| getRight               |        |   X   | Returns an `Option` from a `These`'s right. If there's not a right, returns a `None`.                                                                                                                                                                  |
-| getRightOnly           |        |   X   | Returns an `Option` from a `These`'s right, but only if it was constructed with `Right`, not `Both`.                                                                                                                                                   |
-| getSemigroup           |   X    |   X   |                                                                                                                                                                                                                                                        |
-| getShow                |   X    |   X   | Returns a `Show<Either<A, B>>` of the `Either<A, B>`                                                                                                                                                                                                   |
-| getValidation          |   X    |       |                                                                                                                                                                                                                                                        |
-| getValidationMonoid    |   X    |       |                                                                                                                                                                                                                                                        |
-| getValidationSemigroup |   X    |       |                                                                                                                                                                                                                                                        |
-| getWitherable          |   X    |       |                                                                                                                                                                                                                                                        |
-| isBoth                 |        |   X   | Tests whether the `These` is a `Both`.                                                                                                                                                                                                                 |
-| isLeft                 |   X    |   X   | Tests whether the `Either` / `These` is a `Left`.                                                                                                                                                                                                      |
-| isRight                |   X    |   X   | Tests whether the `Either` / `These` is a `Right`.                                                                                                                                                                                                     |
-| left                   |   X    |   X   | Constructs a new `Either` with a `left` value. This usually represents a failure, due to its left-bias.                                                                                                                                                |
-| leftOrBoth             |        |   X   | Takes a value for the left and an `Option`. If the `Option` is `Some`, returns a `Both`. Else returns a `Left`.                                                                                                                                        |
-| orElse                 |   X    |       |                                                                                                                                                                                                                                                        |
-| parseJSON              |   X    |       | Converts a JSON string into an object. Returns a `Left` on failure.                                                                                                                                                                                    |
-| right                  |   X    |   X   | Constructs a new `Either` with a `right` value. This usually represents a failure, due to its right-bias.                                                                                                                                              |
-| rightOrBoth            |        |   X   | Takes a value for the right and an `Option`. If the `Option` is `Some`, returns a `Both`. Else returns a `Right`.                                                                                                                                      |
-| stringifyJSON          |   X    |       | Converts an object into a JSON string. Returns a `Left` on failure.                                                                                                                                                                                    |
-| swap                   |   X    |   X   | Swaps the left and right values of an `Either`.                                                                                                                                                                                                        |
-| toError                |   X    |       |                                                                                                                                                                                                                                                        |
-| toTuple                |        |   X   | Takes a default value for left and right, and takes a `These`. If its a `Both`, returns a `Tuple` whose first value is the `These` left and whose second value is the `These` right. Else applies the default value for the missing `Left` or `Right`. |
-| tryCatch               |   X    |       |                                                                                                                                                                                                                                                        |
-| alt                    |   X    |       |                                                                                                                                                                                                                                                        |
-| ap                     |   X    |       |                                                                                                                                                                                                                                                        |
-| apFirst                |   X    |       |                                                                                                                                                                                                                                                        |
-| apSecond               |   X    |       |                                                                                                                                                                                                                                                        |
-| bimap                  |   X    |   X   | Takes two functions, each of which operates on a left and right value, applies them to each side of the `Either` and returns the new `Either`.                                                                                                         |
-| chain                  |   X    |       |                                                                                                                                                                                                                                                        |
-| chainFirst             |   X    |       |                                                                                                                                                                                                                                                        |
-| duplicate              |   X    |       | Nests an `Either` in another `Either`. The nested `Either` is stored as a right value.                                                                                                                                                                 |
-| extend                 |   X    |       |                                                                                                                                                                                                                                                        |
-| filterOrElse           |   X    |       |                                                                                                                                                                                                                                                        |
-| flatten                |   X    |       | Unpacks an inner `Right` into an outer `Right`.                                                                                                                                                                                                        |
-| foldMap                |   X    |   X   |                                                                                                                                                                                                                                                        |
-| fromOption             |   X    |       | Takes a function that returns a `Left` and converts the `Option` to a `Right` if it's a `Some`, else uses the function to return a `Left`.                                                                                                             |
-| fromPredicate          |   X    |       |                                                                                                                                                                                                                                                        |
-| map                    |   X    |   X   | Performs a function on the `Either`'s right value. If the `Either` is a `Left`, returns the `Left`.                                                                                                                                                    |
-| mapLeft                |   X    |   X   | Performs a function on the `Either`'s left value. If the `Either` is a `Right`, returns the `Right`.                                                                                                                                                   |
-| reduce                 |   X    |   X   | Performs a function on an `Either`'s right value and return a non-`Either` value.                                                                                                                                                                      |
-| reduceRight            |   X    |   X   |                                                                                                                                                                                                                                                        |
+| Name                   | Either | These | Definition                                                                                                                                                                           |
+| ---------------------- | :----: | :---: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| both                   |        |   X   | Constructs a `These` from a left and right value.                                                                                                                                    |
+| elem                   |   X    |       | Tests whether an `Either` is a `Right` and has a value is equal to a given value.                                                                                                    |
+| exists                 |   X    |       | If the `Either` is a `Right` returns the boolean value of the `Predicate`. If its a `Left`, returns `false`.                                                                         |
+| fold                   |   X    |   X   | Takes two functions, and applies one, depending on whether the `Either` is a `Left` or `Right` respectively.                                                                         |
+| fromNullable           |   X    |       | Takes a default and nullable value. If the value is not nully, returns a `Right` value, else returns the `Left` default value.                                                       |
+| fromOptions            |        |   X   | Takes a pair of `Option`s and attempts to create a `These` from them                                                                                                                 |
+| getApplyMonoid         |   X    |       |                                                                                                                                                                                      |
+| getApplySemigroup      |   X    |       |                                                                                                                                                                                      |
+| getEq                  |   X    |       | Takes an `Eq` for the left and right value, and returns an `Eq` for the `Either` / `These`.                                                                                          |
+| getLeft                |        |   X   | Returns an `Option` from a `These`'s left. If there's not a left, returns a `None`.                                                                                                  |
+| getLeftOnly            |        |   X   | Returns an `Option` from a `These`'s left, but only if it was constructed with `Left`, not `Both`.                                                                                   |
+| getMonad               |        |   X   |                                                                                                                                                                                      |
+| getOrElse              |   X    |       | Takes a function `onLeft`, and returns the `Right` value or the result of the `onLeft` function, which returns the same type as the `Either`'s right.                                |
+| getRight               |        |   X   | Returns an `Option` from a `These`'s right. If there's not a right, returns a `None`.                                                                                                |
+| getRightOnly           |        |   X   | Returns an `Option` from a `These`'s right, but only if it was constructed with `Right`, not `Both`.                                                                                 |
+| getSemigroup           |   X    |   X   |                                                                                                                                                                                      |
+| getShow                |   X    |   X   | Returns a `Show<Either<A, B>>` of the `Either<A, B>`                                                                                                                                 |
+| getValidation          |   X    |       |                                                                                                                                                                                      |
+| getValidationMonoid    |   X    |       | Given `Semigroup<E>` and `Monoid<A>`, constructs `Monoid<Either<E, A>>`.                                                                                                             |
+| getValidationSemigroup |   X    |       | Given `Semigroup<E>` and `Semigroup<A>`, constructs `Semigroup<Either<E, A>>`.                                                                                                       |
+| getWitherable          |   X    |       |                                                                                                                                                                                      |
+| isBoth                 |        |   X   | Tests whether the `These` is a `Both`.                                                                                                                                               |
+| isLeft                 |   X    |   X   | Tests whether the `Either` / `These` is a `Left`.                                                                                                                                    |
+| isRight                |   X    |   X   | Tests whether the `Either` / `These` is a `Right`.                                                                                                                                   |
+| left                   |   X    |   X   | Constructs a new `Either` with a `left` value. This usually represents a failure, due to its left-bias.                                                                              |
+| leftOrBoth             |        |   X   | Takes a value for the left and an `Option`. If the `Option` is `Some`, returns a `Both`. Else returns a `Left`.                                                                      |
+| orElse                 |   X    |       |                                                                                                                                                                                      |
+| parseJSON              |   X    |       | Converts a JSON string into an object. Returns a `Left` on failure.                                                                                                                  |
+| right                  |   X    |   X   | Constructs a new `Either` with a `right` value. This usually represents a success, due to its right-bias.                                                                            |
+| rightOrBoth            |        |   X   | Takes a value for the right and an `Option`. If the `Option` is `Some`, returns a `Both`. Else returns a `Right`.                                                                    |
+| stringifyJSON          |   X    |       | Converts an object into a JSON string. Returns a `Left` on failure.                                                                                                                  |
+| swap                   |   X    |   X   | Swaps the left and right values of an `Either`.                                                                                                                                      |
+| toError                |   X    |       | Constructs a value into an `Error`. Used in `tryCatch`.                                                                                                                              |
+| toTuple                |        |   X   | Takes a default value for left and right, and takes a `These`. If its a `Both`, returns a `Tuple` whose first value is the `These` left and whose second value is the `These` right. |
+|                        |        |       | Else applies the default value for the missing `Left` or `Right`.                                                                                                                    |
+| tryCatch               |   X    |       | Takes a function that might throw an `Error`and a `toError` function and constructs on `Either` from it.                                                                             |
+| alt                    |   X    |       |                                                                                                                                                                                      |
+| ap                     |   X    |       |                                                                                                                                                                                      |
+| apFirst                |   X    |       |                                                                                                                                                                                      |
+| apSecond               |   X    |       |                                                                                                                                                                                      |
+| bimap                  |   X    |   X   | Takes two functions, each of which operates on a left and right value, applies them to each side of the `Either` and returns the new `Either`.                                       |
+| chain                  |   X    |       |                                                                                                                                                                                      |
+| chainFirst             |   X    |       |                                                                                                                                                                                      |
+| duplicate              |   X    |       | Nests an `Either` in another `Either`. The nested `Either` is stored as a right value.                                                                                               |
+| extend                 |   X    |       |                                                                                                                                                                                      |
+| filterOrElse           |   X    |       |                                                                                                                                                                                      |
+| flatten                |   X    |       | Unpacks an inner `Right` into an outer `Right`.                                                                                                                                      |
+| foldMap                |   X    |   X   |                                                                                                                                                                                      |
+| fromOption             |   X    |       | Takes a function that returns a `Left` and converts the `Option` to a `Right` if it's a `Some`, else uses the function to return a `Left`.                                           |
+| fromPredicate          |   X    |       |                                                                                                                                                                                      |
+| map                    |   X    |   X   | Performs a function on the `Either`'s right value. If the `Either` is a `Left`, returns the `Left`.                                                                                  |
+| mapLeft                |   X    |   X   | Performs a function on the `Either`'s left value. If the `Either` is a `Right`, returns the `Right`.                                                                                 |
+| reduce                 |   X    |   X   |                                                                                                                                                                                      |
+| reduceRight            |   X    |   X   |                                                                                                                                                                                      |
 
-### [Array.ts](https://gcanti.github.io/fp-ts/modules/Array.ts.html), [NonEmptyArray.ts](https://gcanti.github.io/fp-ts/modules/NonEmptyArray.ts.html), and [Tuple.ts](https://gcanti.github.io/fp-ts/modules/Tuple.ts.html)
+### [Array.ts](https://gcanti.github.io/fp-ts/modules/Array.ts.html) / [NonEmptyArray.ts](https://gcanti.github.io/fp-ts/modules/NonEmptyArray.ts.html) / [Tuple.ts](https://gcanti.github.io/fp-ts/modules/Tuple.ts.html)
 
 When I am referring to an JavaScript array, I will use the lowercase "array". If I am referring to the `fp-ts` version, I will use `Array`. In practice, any function that can take an `Array` will also take an array.
 
@@ -993,12 +1047,12 @@ When I am referring to an JavaScript array, I will use the lowercase "array". If
 | getMonad              |       |     |   X   |                                                                                                                                                                                                  |
 | getMonoid             |   X   |     |       | Returns a Monoid for `Array<A>`                                                                                                                                                                  |
 | getOrd                |   X   |     |       | Derives an Ord over the Array of a given element type from the Ord of that type.                                                                                                                 |
-| getEq                 |       |     |       | The ordering between two such arrays is equal to: the first non equal comparison of each arrays elements taken pairwise in increasing order, in case of equality over all the pairwise elements. |
+|                       |       |     |       | The ordering between two such arrays is equal to: the first non equal comparison of each arrays elements taken pairwise in increasing order, in case of equality over all the pairwise elements. |
 |                       |       |     |       | The longest array is considered the greatest, if both arrays have the same length, the result is equality.                                                                                       |
 | getShow               |   X   |  X  |       | Derives a `Show` over an Array.                                                                                                                                                                  |
-| head                  |   X   |  X  |       | Get the first element in an array, or None if the array is empty                                                                                                                                 |
-| init                  |   X   |  X  |       | Get all but the last element of an array, creating a new array, or None if the array is empty                                                                                                    |
-| insertAt              |   X   |  X  |       | Insert an element at the specified index, creating a new array, or returning None if the index is out of bounds                                                                                  |
+| head                  |   X   |  X  |       | Get the first element in an array, or `None` if the array is empty                                                                                                                               |
+| init                  |   X   |  X  |       | Get all but the last element of an array, creating a new array, or `None` if the array is empty                                                                                                  |
+| insertAt              |   X   |  X  |       | Insert an element at the specified index, creating a new array, or returning `None` if the index is out of bounds                                                                                |
 | intersection          |   X   |     |       | Creates an array of unique values that are included in all given arrays using a Eq for equality comparisons. The order and references of result values are determined by the first array.        |
 | isEmpty               |   X   |     |       | Test whether an array is empty                                                                                                                                                                   |
 | isNonEmpty            |   X   |     |       | Test whether an array is non empty narrowing down the type to `NonEmptyArray<A>`                                                                                                                 |
@@ -1009,7 +1063,7 @@ When I am referring to an JavaScript array, I will use the lowercase "array". If
 | lefts                 |   X   |     |       | Extracts from an array of `Either` all the `Left` elements. All the `Left` elements are extracted in order                                                                                       |
 | lookup                |   X   |     |       | Read a value at a particular index from an array                                                                                                                                                 |
 | makeBy                |   X   |     |       | Return a list of length `n` with element `i` initialized with `f(i)`                                                                                                                             |
-| modifyAt              |   X   |  X  |       | Apply a function to the element at the specified index, creating a new array, or returning None if the index is out of bounds                                                                    |
+| modifyAt              |   X   |  X  |       | Apply a function to the element at the specified index, creating a new array, or returning `None` if the index is out of bounds                                                                  |
 | of                    |       |  X  |       | Given a value, returns an `Array` / `NonEmptyArray` containing the value.                                                                                                                        |
 | range                 |   X   |     |       | Create an array containing a range of integers, including both endpoints                                                                                                                         |
 | replicate             |   X   |     |       | Create an array containing a value repeated the specified number of times                                                                                                                        |
@@ -1020,7 +1074,7 @@ When I am referring to an JavaScript array, I will use the lowercase "array". If
 | scanLeft              |   X   |     |       | Same as `reduce` but it carries over the intermediate steps                                                                                                                                      |
 | scanRight             |   X   |     |       | Same as `reduceRight` but it carries over the intermediate steps                                                                                                                                 |
 | snoc                  |   X   |  X  |       | Append an element to the end of an array, creating a new non empty array                                                                                                                         |
-| concat                |       |  X  |       | Concatenate an Array with a NonEmptyArray, returning a NonEmptyArray.                                                                                                                            |
+| concat                |       |  X  |       | Concatenate an `Array` with a `NonEmptyArray`, returning a `NonEmptyArray`.                                                                                                                      |
 | fst                   |       |     |   X   | Returns the first value of a tuple.                                                                                                                                                              |
 | snd                   |       |     |   X   | Returns the second value of a tuple.                                                                                                                                                             |
 | sort                  |   X   |  X  |       | Sort the elements of an array in increasing order, creating a new array                                                                                                                          |
@@ -1074,7 +1128,7 @@ When I am referring to an JavaScript array, I will use the lowercase "array". If
 | reduceWithIndex       |   X   |  X  |       | Same as `reduce` but with an additional parameter that tracks the index.                                                                                                                         |
 | separate              |   X   |     |       | Given an array of `Either<A, B>`, returns a `Separated<A[], B[]>`                                                                                                                                |
 
-### `Records.ts` and `Map.ts`
+### [Record.ts](https://gcanti.github.io/fp-ts/modules/Record.ts.html) / [Map.ts](https://gcanti.github.io/fp-ts/modules/Map.ts.html)
 
 These are type classes representing JavaScript objects and ES6 Maps respectively. For more on the differences, see [the MDN page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#Objects_and_maps_compared).
 
@@ -1148,15 +1202,68 @@ These are type classes representing JavaScript objects and ES6 Maps respectively
 
 ## Utility Functions
 
-### `boolean.ts`
+### [boolean.ts](https://gcanti.github.io/fp-ts/modules/boolean.ts.html)
 
-### `Date.ts`
+| Name | Definition                                                                                                                                                           |
+| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| fold | Defines the fold over a boolean value. Takes two thunks `onTrue`, `onFalse` and a boolean value. If value is `false`, `onFalse()` is returned, otherwise `onTrue()`. |
 
-### `Console.ts`
+### [Date.ts](https://gcanti.github.io/fp-ts/modules/Date.ts.html)
 
-### `Random.ts`
+| Name   | Definition                                                                                 |
+| ------ | ------------------------------------------------------------------------------------------ |
+| create | Returns an `IO<Date>`, representing the current date.                                      |
+| now    | Returns an `IO<number>`, representing the milliseconds since Midnight UTC, January 1, 1970 |
 
-### `function.ts`
+### [Console.ts](https://gcanti.github.io/fp-ts/modules/Console.ts.html)
+
+| Name  | Definition                              |
+| ----- | --------------------------------------- |
+| error | Wraps `console.error` in an `IO<void>`. |
+| info  | Wraps `console.info` in an `IO<void>`.  |
+| log   | Wraps `console.log` in an `IO<void>`.   |
+| warn  | Wraps `console.warn` in an `IO<void>`.  |
+
+### [Random.ts](https://gcanti.github.io/fp-ts/modules/Random.ts.html)
+
+| Name        | Definition                                                                                                       |
+| ----------- | ---------------------------------------------------------------------------------------------------------------- |
+| randomBool  | An `IO<boolean>` that returns a random boolean.                                                                  |
+| random      | An `IO<number>` that wraps `Math.random`.                                                                        |
+| randomInt   | An `IO<number>` that returns a number within a closed (includes both endpoints) interval.                        |
+| randomRange | An `IO<number>` that returns a number within a range, where the minimum is included and the maximum is excluded. |
+
+### [function.ts](https://gcanti.github.io/fp-ts/modules/function.ts.html)
+
+| Name           | Definition                                                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| unsafeCoerce   | Takes a value and returns the same value assigned to a different type. By default, it returns `unknown`.                              |
+| absurd         | A function which is called with one `never` argument, and throws `Error('Called 'absurd' function which should be uncallable')`       |
+| constFalse     | A thunk that always returns `false`, i.e. `() => false`                                                                               |
+| constNull      | A thunk that always returns `null`, i.e. `() => null`                                                                                 |
+| constTrue      | A thunk that always returns `true`, i.e. `() =>`true`                                                                                 |
+| constUndefined | A thunk that always returns `undefined`, i.e. `() => undefined`                                                                       |
+| constVoid      | A thunk that always returns `void`, i.e. `(): void => {}`                                                                             |
+| constant       | Takes a value and returns a thunk that always returns that value.                                                                     |
+| decrement      | Decrements a number by one.                                                                                                           |
+| flip           | Given a function that takes two arguments, reverses the order of those arguments.                                                     |
+| flow           | Function composition, left to right.                                                                                                  |
+| identity       | Function that always returns the function passed in.                                                                                  |
+| increment      | Increments a number by one.                                                                                                           |
+| not            | Takes a `Predicate` (unary function that returns a boolean) and returns its inverse. `not(x => x === true)` is `x => x === false`     |
+| tuple          | Returns the arguments as an `Array<any>`.                                                                                             |
+| tupled         | Creates a tupled version of this function: instead of `n` arguments, it accepts a single tuple argument.                              |
+| untupled       | Takes a tupled function and returns a function with multiple arguments: instead of a single tuple argument, it accepts `n` arguments. |
+
+There are several useful interfaces defined here as well:
+
+| Interface    | Definition                                                                                                                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Endomorphism | Defines a function where the input type is same as the output.                                                                                                                        |
+| FunctionN    | Defines a function of `n` arguments.                                                                                                                                                  |
+| Lazy         | Defines a [thunk](https://daveceddia.com/what-is-a-thunk/), i.e. a deferred function                                                                                                  |
+| Predicate    | Defines a function that returns a boolean.                                                                                                                                            |
+| Refinement   | Defines a function that asserts a type on its return value, using TypeScript's `is`. Though the interface doesn't include it, `Refinement`s in `fp-ts` typically returns an `Option`. |
 
 ### `index.ts`
 
