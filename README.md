@@ -827,7 +827,7 @@ The `Applicative` must follow these additional laws:
 | Extends      | Apply                                                                                                                                                                |
 | What it Adds | `zero` property, which allows for identity                                                                                                                           |
 
-`Alternative`s must follow the following rules, where `f` is a function and `fa` is a `Functor`:
+`Alternative`s must follow the following rules, where `f` is a function, `fa` is a `Functor`, & `fab` and `gab` are functions that take `a` and return `b`:
 
 1. Left identity: A.alt( zero, fa ) == fa
 2. Right identity: A.alt( fa, zero ) == fa
